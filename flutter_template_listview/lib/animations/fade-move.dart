@@ -1,55 +1,38 @@
 import 'package:flutter/material.dart';
 
 class FadeMoveAnimation extends StatefulWidget {
-  double opacity;
-  double left;
-  double top;
-  double bottom;
-  Widget child;
+  final double opacity;
+  final double right;
+  final double left;
+  final double top;
+  final double bottom;
+  final Widget child;
 
   FadeMoveAnimation({
     @required this.child,
     this.left,
     this.bottom,
     this.top,
+    this.right,
     this.opacity
   });
 
   @override
-  _FadeMoveAnimationState createState() => _FadeMoveAnimationState(
-    child: this.child,
-    left: this.left,
-    top: this.top,
-    bottom: this.bottom,
-    opacity: this.opacity
-  );
+  _FadeMoveAnimationState createState() => _FadeMoveAnimationState();
 }
 
 class _FadeMoveAnimationState extends State<FadeMoveAnimation> {
 
-  double opacity;
-  double left;
-  double top;
-  double bottom;
-  Widget child;
-
-  _FadeMoveAnimationState({
-    @required this.child,
-    this.left,
-    this.bottom,
-    this.top,
-    this.opacity
-  });
-
   @override
   Widget build(BuildContext context) {
     return Positioned(
-      top: this.top,
-      left: this.left,
-      bottom: this.bottom,
+      top: widget.top,
+      left: widget.left,
+      bottom: widget.bottom,
+      right: widget.right,
       child: Opacity(
-        child: this.child,
-        opacity: this.opacity,
+        child: widget.child,
+        opacity: widget.opacity,
       ),
     );
   }

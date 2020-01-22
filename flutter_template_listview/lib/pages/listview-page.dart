@@ -15,18 +15,25 @@ class _ListViewPageState extends State<ListViewPage> {
   double _heightDistanceTopTemp;
 
   double leftAnimation = 0;
+  double leftFastAnimation = 0;
+  double topAnimation = 0;
+  double topFastAnimation = 0;
   double opacityAnimation = 1;
 
   @override
   void initState() {
-    this._heightDistanceTopTemp = _heightDistanceTop;
-    this.onScrollListView = (double offset) {
+    _heightDistanceTopTemp = _heightDistanceTop;
+    onScrollListView = (double offset) {
       print('ScrollEvent: $offset');
       setState(() {
-        this._heightDistanceTopTemp = this._heightDistanceTop - offset;
+        _heightDistanceTopTemp = _heightDistanceTop - offset;
         
-        leftAnimation = offset;
-        opacityAnimation = 1 - ((offset/50) > 1.0 ? 1.0 : (offset/50));//1 - (offset/10);
+        double speedAnimation = offset * 0.4;
+        leftAnimation = speedAnimation;
+        leftFastAnimation = speedAnimation * 1.6;
+        topAnimation = speedAnimation;
+        topFastAnimation = speedAnimation * 1.6;
+        opacityAnimation = 1 - ((speedAnimation/50) > 1.0 ? 1.0 : (speedAnimation/50));
       });
     };
     super.initState();
@@ -34,79 +41,77 @@ class _ListViewPageState extends State<ListViewPage> {
 
   @override
   Widget build(BuildContext context) {
+    double widthScreen = MediaQuery.of(context).size.width;
     return Scaffold(
       body: Stack(
         children: [
           Container(
             width: double.infinity,
-            height: _heightDistanceTopTemp,
+            height: _heightDistanceTopTemp <= 0 ? 0 : _heightDistanceTopTemp,
             color: Colors.blue,
           ),
           FadeMoveAnimation(
-            top: this._heightDistanceTop - 100,
+            top: _heightDistanceTop - 100,
             left: 20 - leftAnimation,
             bottom: 20,
             opacity: opacityAnimation,
             child: Text('Rafael Kenji Nagai', style: TextStyle(fontSize: 20, color: Colors.white)),
           ),
-          // Positioned(
-          //   top: this._heightDistanceTop - 100,
-          //   left: 20 - leftAnimation,
-          //   bottom: 20,
-          //   child: Opacity(
-          //     child: Text('Rafael Kenji Nagai', style: TextStyle(fontSize: 20, color: Colors.white)),
-          //     opacity: opacityAnimation,
-          //   ),
-          // ),
-          // Positioned(
-          //   top: this._heightDistanceTop - 80,
-          //   left: 20 - leftAnimation,
-          //   bottom: 20,
-          //   child: Opacity(
-          //     child: Container(
-          //       padding: EdgeInsets.only(top: 10),
-          //       child: Text('21/01/2020', style: TextStyle(fontSize: 15, color: Colors.white70))
-          //     ),
-          //     opacity: opacityAnimation,
-          //   ),
-          // ),
-          // Container(
-          //   height: _heightDistanceTop,
-          //   padding: EdgeInsets.all(20),
-          //   child: Column(
-          //     crossAxisAlignment: CrossAxisAlignment.start,
-          //     mainAxisAlignment: MainAxisAlignment.spaceAround,
-          //     children: [
-          //       Center(child: Text('TEMPLATE', style: TextStyle(fontSize: 30, color: Colors.white))),
-          //       Column(
-          //         crossAxisAlignment: CrossAxisAlignment.start,
-          //         mainAxisAlignment: MainAxisAlignment.start,
-          //         children: [
-          //           Opacity(
-          //             child: Text('Rafael Kenji Nagai', style: TextStyle(fontSize: 20, color: Colors.white)),
-          //             opacity: opacityAnimation,
-          //             //left: leftAnimation, 
-          //           ),
-          //           Opacity(
-          //             child: Container(
-          //               padding: EdgeInsets.only(top: 10),
-          //               child: Text('21/01/2020', style: TextStyle(fontSize: 15, color: Colors.white70))
-          //             ),
-          //             opacity: opacityAnimation,
-          //           )
-          //         ]),
-          //     ],
-          //   ),
-          // ),
+          FadeMoveAnimation(
+            top: _heightDistanceTop - 70,
+            left: 20 - leftFastAnimation,
+            bottom: 20,
+            opacity: opacityAnimation,
+            child: Text('21/01/2020', style: TextStyle(fontSize: 15, color: Colors.white70))
+          ),
+          FadeMoveAnimation(
+            top: 40 - topFastAnimation,
+            left: 0,
+            opacity: opacityAnimation,
+            child: Container(
+              width: widthScreen,
+              child: Center(
+                child: Text('Bem-Vindo', style: TextStyle(fontSize: 25, color: Colors.white70)) 
+              ,)
+            ,)
+          ),
+          FadeMoveAnimation(
+            top: 70 - topAnimation,
+            left: 0,
+            opacity: opacityAnimation,
+            child: Container(
+              width: widthScreen,
+              child: Center(
+                child: Text('Rafael Kenji Nagai', style: TextStyle(fontSize: 35, color: Colors.white)) 
+              ,)
+            ,) 
+          ),
           Container(
-            //color: Color.fromRGBO(255, 255, 255, 1),
             child: ListViewBoxes(
               onScroll: onScrollListView,
               marginHeader: _heightDistanceTop,
             ),
-          )
+          ),
+          FadeMoveAnimation(
+            top: positionHeader(topAnimation - 90),
+            left: 0,
+            opacity: 1 - opacityAnimation,
+            child: Container(
+              width: widthScreen,
+              height: 100,
+              color: Colors.blue,
+              padding: EdgeInsets.only(top: 20),
+              child: Center(
+                child: Text('Template App', style: TextStyle(fontSize: 35, color: Colors.white)) 
+              ,)
+            ,) 
+          ),
         ],
       ),
     );
+  }
+
+  double positionHeader(double top){
+    return top > 0 ? 0 : top;
   }
 }
