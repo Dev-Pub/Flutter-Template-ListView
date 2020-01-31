@@ -5,8 +5,6 @@ Example:
 
 ![](/images/template_listview.gif)
 
-![](/images/template_listview_2.gif)
-
 
 
 If you want to save your time with layout and animations, just download and enjoy it!
