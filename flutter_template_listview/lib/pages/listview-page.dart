@@ -9,7 +9,7 @@ class ListViewPage extends StatefulWidget {
 }
 
 class _ListViewPageState extends State<ListViewPage> {
-  final double _heightDistanceTop = 250;
+  final double _heightDistanceTop = 300;
   
   Function(double) onScrollListView;
   double _heightDistanceTopTemp;
@@ -24,7 +24,6 @@ class _ListViewPageState extends State<ListViewPage> {
   void initState() {
     _heightDistanceTopTemp = _heightDistanceTop;
     onScrollListView = (double offset) {
-      print('ScrollEvent: $offset');
       setState(() {
         _heightDistanceTopTemp = _heightDistanceTop - offset;
         
@@ -51,21 +50,21 @@ class _ListViewPageState extends State<ListViewPage> {
             color: Colors.blue,
           ),
           FadeMoveAnimation(
-            top: _heightDistanceTop - 100,
+            top: _heightDistanceTop - 75,
             left: 20 - leftAnimation,
             bottom: 20,
             opacity: opacityAnimation,
             child: Text('Rafael Kenji Nagai', style: TextStyle(fontSize: 20, color: Colors.white)),
           ),
           FadeMoveAnimation(
-            top: _heightDistanceTop - 70,
+            top: _heightDistanceTop - 50,
             left: 20 - leftFastAnimation,
             bottom: 20,
             opacity: opacityAnimation,
             child: Text('21/01/2020', style: TextStyle(fontSize: 15, color: Colors.white70))
           ),
           FadeMoveAnimation(
-            top: 40 - topFastAnimation,
+            top: 115 - topFastAnimation,
             left: 0,
             opacity: opacityAnimation,
             child: Container(
@@ -76,7 +75,7 @@ class _ListViewPageState extends State<ListViewPage> {
             ,)
           ),
           FadeMoveAnimation(
-            top: 70 - topAnimation,
+            top: 145 - topAnimation,
             left: 0,
             opacity: opacityAnimation,
             child: Container(
@@ -93,14 +92,14 @@ class _ListViewPageState extends State<ListViewPage> {
             ),
           ),
           FadeMoveAnimation(
-            top: positionHeader(topAnimation - 90),
+            top: positionHeader(topAnimation - 50),
             left: 0,
             opacity: 1 - opacityAnimation,
             child: Container(
               width: widthScreen,
-              height: 100,
+              height: 120,
               color: Colors.blue,
-              padding: EdgeInsets.only(top: 20),
+              padding: EdgeInsets.only(top: 60),
               child: Center(
                 child: Text('Template App', style: TextStyle(fontSize: 35, color: Colors.white)) 
               ,)
