@@ -2,7 +2,7 @@
 
 
 
-[](/images/template_listview.gif)
+[](images/template_listview.gif)
 
 
 
